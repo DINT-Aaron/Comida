@@ -72,6 +72,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MainWindowVM.cs" />
     <Compile Include="Plato.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -98,7 +99,16 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="assets\china.png" />
+    <Resource Include="assets\gluten.png" />
+    <Resource Include="assets\hotdog.jpg" />
+    <Resource Include="assets\mexico.png" />
+    <Resource Include="assets\milk.png" />
+    <Resource Include="assets\soybean.png" />
+    <Resource Include="assets\sulfide.png" />
+    <Resource Include="assets\united_states.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="assets\icon.ico" />
   </ItemGroup>

@@ -20,9 +20,13 @@ namespace Comida
     /// </summary>
     public partial class MainWindow : Window
     {
+        MainWindowVM vm;
         public MainWindow()
         {
             InitializeComponent();
+
+            vm = new MainWindowVM();
+            this.DataContext = vm;
         }
     }
 }

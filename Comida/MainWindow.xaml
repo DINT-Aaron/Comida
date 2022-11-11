@@ -31,6 +31,110 @@
         <Style TargetType="{x:Type CheckBox}">
             <Setter Property="Margin" Value="0,5,50,5"></Setter>
         </Style>
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Width" Value="120"></Setter>
+            <Setter Property="HorizontalAlignment" Value="Left"></Setter>
+            <Setter Property="Margin" Value="10,0"></Setter>
+        </Style>
+
+        <Style TargetType="{x:Type TextBlock}" x:Key="nombrePlato">
+            <Setter Property="DockPanel.Dock" Value="Top"></Setter>
+            <Setter Property="Text" Value="{Binding Path=Nombre}"></Setter>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=Tipo}" Value="Americana">
+                    <Setter Property="FontFamily" Value="Slim Summer"></Setter>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Tipo}" Value="China">
+                    <Setter Property="FontFamily" Value="Chinese Wok Food St"></Setter>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Tipo}" Value="Mexicana">
+                    <Setter Property="FontFamily" Value="Taco Salad"></Setter>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="{x:Type Image}" x:Key="iconos">
+            <Setter Property="Visibility" Value="Collapsed"></Setter>
+            <Setter Property="DockPanel.Dock" Value="Left"></Setter>
+            <Setter Property="Width" Value="48"></Setter>
+        </Style>
+        <Style TargetType="{x:Type Image}" BasedOn="{StaticResource iconos}" x:Key="iconoAmerica">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=Tipo}" Value="Americana">
+                    <Setter Property="Visibility" Value="Visible"></Setter>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="{x:Type Image}" BasedOn="{StaticResource iconos}" x:Key="iconoChina">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=Tipo}" Value="China">
+                    <Setter Property="Visibility" Value="Visible"></Setter>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="{x:Type Image}" BasedOn="{StaticResource iconos}" x:Key="iconoMexico">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=Tipo}" Value="Mexicana">
+                    <Setter Property="Visibility" Value="Visible"></Setter>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="{x:Type Image}" BasedOn="{StaticResource iconos}" x:Key="iconosAlergenos">
+            <Setter Property="DockPanel.Dock" Value="Right"></Setter>
+            <Setter Property="Width" Value="26"></Setter>
+        </Style>
+        <Style TargetType="{x:Type Image}" BasedOn="{StaticResource iconosAlergenos}" x:Key="iconoGluten">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=Gluten}" Value="True">
+                    <Setter Property="Visibility" Value="Visible"></Setter>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="{x:Type Image}" BasedOn="{StaticResource iconosAlergenos}" x:Key="iconoSoja">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=Soja}" Value="True">
+                    <Setter Property="Visibility" Value="Visible"></Setter>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="{x:Type Image}" BasedOn="{StaticResource iconosAlergenos}" x:Key="iconoLeche">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=Leche}" Value="True">
+                    <Setter Property="Visibility" Value="Visible"></Setter>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="{x:Type Image}" BasedOn="{StaticResource iconosAlergenos}" x:Key="iconoSulfitos">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=Sulfitos}" Value="True">
+                    <Setter Property="Visibility" Value="Visible"></Setter>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="{x:Type Image}" x:Key="imagenPlato">
+            <Setter Property="Source" Value="{Binding Path=Imagen}"></Setter>
+            <Setter Property="Width" Value="250"></Setter>
+        </Style>
+
+        <DataTemplate DataType="{x:Type local:Plato}">
+            <Border BorderBrush="Black" BorderThickness="1" Background="LightSkyBlue">
+                <DockPanel>
+                    <Viewbox>
+                        <TextBlock Style="{StaticResource nombrePlato}"></TextBlock>
+                    </Viewbox>
+                    <DockPanel DockPanel.Dock="Bottom" LastChildFill="False">
+                        <Image Source="assets/china.png" Style="{StaticResource iconoChina}"></Image>
+                        <Image Source="assets/mexico.png" Style="{StaticResource iconoMexico}"></Image>
+                        <Image Source="assets/united_states.png" Style="{StaticResource iconoAmerica}"></Image>
+                        <Image Source="assets/gluten.png" Style="{StaticResource iconoGluten}"></Image>
+                        <Image Source="assets/milk.png" Style="{StaticResource iconoLeche}"></Image>
+                        <Image Source="assets/soybean.png" Style="{StaticResource iconoSoja}"></Image>
+                        <Image Source="assets/sulfide.png" Style="{StaticResource iconoSulfitos}"></Image>
+                    </DockPanel>
+                    <Image></Image>
+                </DockPanel>
+            </Border>
+        </DataTemplate>
+
     </Window.Resources>
     <Border BorderThickness="1" BorderBrush="Black"  Margin="10">
         <DockPanel Margin="10">
@@ -51,7 +155,7 @@
                 </GroupBox>
                 <Button>Limpiar Selección</Button>
             </StackPanel>
-            <ListBox>
+            <ListBox ItemsSource="{Binding Path=Platos}">
 
             </ListBox>
         </DockPanel>
