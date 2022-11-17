@@ -19,9 +19,17 @@
         </Style>
         <Style TargetType="{x:Type TextBox}">
             <Setter Property="Margin" Value="10,0,10,10"></Setter>
+            <Setter Property="IsEnabled" Value="False"></Setter>           
+        </Style>
+        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}" x:Key="nombreTextBox">
+            <Setter Property="Text" Value="{Binding Path=PlatoSeleccionado.Nombre}"></Setter>
+        </Style>
+        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}" x:Key="fotoTextBox">
+            <Setter Property="Text" Value="{Binding Path=PlatoSeleccionado.Imagen}"></Setter>
         </Style>
         <Style TargetType="{x:Type ComboBox}">
             <Setter Property="Margin" Value="10,0,10,10"></Setter>
+            <Setter Property="IsEnabled" Value="False"></Setter>
         </Style>
         <Style TargetType="{x:Type GroupBox}">
             <Setter Property="Header" Value="Alérngenos"></Setter>
@@ -30,11 +38,30 @@
         </Style>
         <Style TargetType="{x:Type CheckBox}">
             <Setter Property="Margin" Value="0,5,50,5"></Setter>
+            <Setter Property="IsEnabled" Value="False"></Setter>
+        </Style>
+        <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource {x:Type CheckBox}}" x:Key="lecheCheckBox">
+            <Setter Property="IsChecked" Value="{Binding Path=PlatoSeleccionado.Leche}"></Setter>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=PlatoSeleccionado}" Value="{x:Null}">
+                    <Setter Property="IsEnabled" Value="False"></Setter>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource {x:Type CheckBox}}" x:Key="sojaCheckBox">
+            <Setter Property="IsChecked" Value="{Binding Path=PlatoSeleccionado.Soja}"></Setter>
+        </Style>
+        <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource {x:Type CheckBox}}" x:Key="glutenCheckBox">
+            <Setter Property="IsChecked" Value="{Binding Path=PlatoSeleccionado.Gluten}"></Setter>
+        </Style>
+        <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource {x:Type CheckBox}}" x:Key="sulfitosCheckBox">
+            <Setter Property="IsChecked" Value="{Binding Path=PlatoSeleccionado.Sulfitos}"></Setter>
         </Style>
         <Style TargetType="{x:Type Button}">
             <Setter Property="Width" Value="120"></Setter>
             <Setter Property="HorizontalAlignment" Value="Left"></Setter>
             <Setter Property="Margin" Value="10,0"></Setter>
+            <Setter Property="IsEnabled" Value="False"></Setter>
         </Style>
 
         <Style TargetType="{x:Type TextBlock}" x:Key="nombrePlato">
@@ -140,22 +167,22 @@
         <DockPanel Margin="10">
             <StackPanel Style="{StaticResource panelLateral}">
                 <TextBlock>Nombre del plato</TextBlock>
-                <TextBox></TextBox>
+                <TextBox Style="{StaticResource nombreTextBox}"></TextBox>
                 <TextBlock>Foto del plato</TextBlock>
-                <TextBox></TextBox>
+                <TextBox Style="{StaticResource fotoTextBox}"></TextBox>
                 <TextBlock>Tipo de comida</TextBlock>
                 <ComboBox></ComboBox>
                 <GroupBox>
                     <WrapPanel >
-                        <CheckBox>Leche</CheckBox>
-                        <CheckBox>Soja</CheckBox>
-                        <CheckBox>Gluten</CheckBox>
-                        <CheckBox>Sulfitos</CheckBox>
+                        <CheckBox Style="{StaticResource lecheCheckBox}">Leche</CheckBox>
+                        <CheckBox Style="{StaticResource sojaCheckBox}">Soja</CheckBox>
+                        <CheckBox Style="{StaticResource glutenCheckBox}">Gluten</CheckBox>
+                        <CheckBox Style="{StaticResource sulfitosCheckBox}">Sulfitos</CheckBox>
                     </WrapPanel>
                 </GroupBox>
                 <Button>Limpiar Selección</Button>
             </StackPanel>
-            <ListBox ItemsSource="{Binding Path=Platos}">
+            <ListBox ItemsSource="{Binding Path=Platos}" SelectedItem="{Binding Path=PlatoSeleccionado}">
 
             </ListBox>
         </DockPanel>

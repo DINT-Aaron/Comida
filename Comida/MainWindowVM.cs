@@ -22,11 +22,22 @@ namespace Comida
             }
         }
 
+        private Plato platoSeleccionado;
+        public Plato PlatoSeleccionado
+        {
+            get { return platoSeleccionado; }
+            set
+            {
+                platoSeleccionado = value;
+                NotifyPropertyChanged("PlatoSeleccionado");
+            }
+        }
+
         public MainWindowVM()
         {
             Platos = new ObservableCollection<Plato>();
 
-            Platos = Plato.GetSamples("C:\\Users\\alumno\\Desktop\\dam2\\DINT\\Tema5\\Actividades\\ut5_actividades_1");
+            Platos = Plato.GetSamples("C:\\Users\\alumno\\Desktop\\dam2\\DINT\\Tema5\\Actividades\\ut5_actividades_1\\Imagenes");
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
