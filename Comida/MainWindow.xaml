@@ -19,17 +19,32 @@
         </Style>
         <Style TargetType="{x:Type TextBox}">
             <Setter Property="Margin" Value="10,0,10,10"></Setter>
-            <Setter Property="IsEnabled" Value="False"></Setter>           
         </Style>
         <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}" x:Key="nombreTextBox">
-            <Setter Property="Text" Value="{Binding Path=PlatoSeleccionado.Nombre}"></Setter>
+            <Setter Property="Text" Value="{Binding Path=PlatoSeleccionado.Nombre, UpdateSourceTrigger=PropertyChanged}"></Setter>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=PlatoSeleccionado}" Value="{x:Null}">
+                    <Setter Property="IsEnabled" Value="False"></Setter>
+                </DataTrigger>
+            </Style.Triggers>
         </Style>
         <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}" x:Key="fotoTextBox">
-            <Setter Property="Text" Value="{Binding Path=PlatoSeleccionado.Imagen}"></Setter>
+            <Setter Property="Text" Value="{Binding Path=PlatoSeleccionado.Imagen, UpdateSourceTrigger=PropertyChanged}"></Setter>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=PlatoSeleccionado}" Value="{x:Null}">
+                    <Setter Property="IsEnabled" Value="False"></Setter>
+                </DataTrigger>
+            </Style.Triggers>
         </Style>
         <Style TargetType="{x:Type ComboBox}">
             <Setter Property="Margin" Value="10,0,10,10"></Setter>
-            <Setter Property="IsEnabled" Value="False"></Setter>
+            <Setter Property="ItemsSource" Value="{Binding Path=Tipos}"></Setter>
+            <Setter Property="SelectedItem" Value="{Binding Path=PlatoSeleccionado.Tipo}"></Setter>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=PlatoSeleccionado}" Value="{x:Null}">
+                    <Setter Property="IsEnabled" Value="False"></Setter>
+                </DataTrigger>
+            </Style.Triggers>
         </Style>
         <Style TargetType="{x:Type GroupBox}">
             <Setter Property="Header" Value="Alérngenos"></Setter>
@@ -38,7 +53,6 @@
         </Style>
         <Style TargetType="{x:Type CheckBox}">
             <Setter Property="Margin" Value="0,5,50,5"></Setter>
-            <Setter Property="IsEnabled" Value="False"></Setter>
         </Style>
         <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource {x:Type CheckBox}}" x:Key="lecheCheckBox">
             <Setter Property="IsChecked" Value="{Binding Path=PlatoSeleccionado.Leche}"></Setter>
@@ -50,23 +64,42 @@
         </Style>
         <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource {x:Type CheckBox}}" x:Key="sojaCheckBox">
             <Setter Property="IsChecked" Value="{Binding Path=PlatoSeleccionado.Soja}"></Setter>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=PlatoSeleccionado}" Value="{x:Null}">
+                    <Setter Property="IsEnabled" Value="False"></Setter>
+                </DataTrigger>
+            </Style.Triggers>
         </Style>
         <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource {x:Type CheckBox}}" x:Key="glutenCheckBox">
             <Setter Property="IsChecked" Value="{Binding Path=PlatoSeleccionado.Gluten}"></Setter>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=PlatoSeleccionado}" Value="{x:Null}">
+                    <Setter Property="IsEnabled" Value="False"></Setter>
+                </DataTrigger>
+            </Style.Triggers>
         </Style>
         <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource {x:Type CheckBox}}" x:Key="sulfitosCheckBox">
             <Setter Property="IsChecked" Value="{Binding Path=PlatoSeleccionado.Sulfitos}"></Setter>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=PlatoSeleccionado}" Value="{x:Null}">
+                    <Setter Property="IsEnabled" Value="False"></Setter>
+                </DataTrigger>
+            </Style.Triggers>
         </Style>
         <Style TargetType="{x:Type Button}">
             <Setter Property="Width" Value="120"></Setter>
             <Setter Property="HorizontalAlignment" Value="Left"></Setter>
             <Setter Property="Margin" Value="10,0"></Setter>
-            <Setter Property="IsEnabled" Value="False"></Setter>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=PlatoSeleccionado}" Value="{x:Null}">
+                    <Setter Property="IsEnabled" Value="False"></Setter>
+                </DataTrigger>
+            </Style.Triggers>
         </Style>
 
         <Style TargetType="{x:Type TextBlock}" x:Key="nombrePlato">
-            <Setter Property="DockPanel.Dock" Value="Top"></Setter>
             <Setter Property="Text" Value="{Binding Path=Nombre}"></Setter>
+            <Setter Property="Margin" Value="5"></Setter>
             <Style.Triggers>
                 <DataTrigger Binding="{Binding Path=Tipo}" Value="Americana">
                     <Setter Property="FontFamily" Value="Slim Summer"></Setter>
@@ -82,7 +115,7 @@
         <Style TargetType="{x:Type Image}" x:Key="iconos">
             <Setter Property="Visibility" Value="Collapsed"></Setter>
             <Setter Property="DockPanel.Dock" Value="Left"></Setter>
-            <Setter Property="Width" Value="48"></Setter>
+            <Setter Property="Width" Value="40"></Setter>
         </Style>
         <Style TargetType="{x:Type Image}" BasedOn="{StaticResource iconos}" x:Key="iconoAmerica">
             <Style.Triggers>
@@ -143,12 +176,15 @@
         </Style>
 
         <DataTemplate DataType="{x:Type local:Plato}">
-            <Border BorderBrush="Black" BorderThickness="1" Background="LightSkyBlue">
-                <DockPanel>
-                    <Viewbox>
+            <Border BorderBrush="Black" BorderThickness="1" Background="AliceBlue" Margin="10">
+                <Border.Effect>
+                    <DropShadowEffect/>
+                </Border.Effect>
+                <DockPanel Width="240" Height="280">
+                    <Viewbox DockPanel.Dock="Top" Stretch="Fill" MaxHeight="50">
                         <TextBlock Style="{StaticResource nombrePlato}"></TextBlock>
                     </Viewbox>
-                    <DockPanel DockPanel.Dock="Bottom" LastChildFill="False">
+                    <DockPanel DockPanel.Dock="Bottom" LastChildFill="False" Margin="10">
                         <Image Source="assets/china.png" Style="{StaticResource iconoChina}"></Image>
                         <Image Source="assets/mexico.png" Style="{StaticResource iconoMexico}"></Image>
                         <Image Source="assets/united_states.png" Style="{StaticResource iconoAmerica}"></Image>
@@ -157,13 +193,14 @@
                         <Image Source="assets/soybean.png" Style="{StaticResource iconoSoja}"></Image>
                         <Image Source="assets/sulfide.png" Style="{StaticResource iconoSulfitos}"></Image>
                     </DockPanel>
-                    <Image></Image>
+                    <Image Source="{Binding Path=Imagen}" Width="200" Height="200" Stretch="Fill"></Image>
                 </DockPanel>
             </Border>
         </DataTemplate>
 
     </Window.Resources>
-    <Border BorderThickness="1" BorderBrush="Black"  Margin="10">
+    <Border Background="LightSkyBlue">
+    <Border BorderThickness="1" BorderBrush="Black"  Margin="10" Background="White">
         <DockPanel Margin="10">
             <StackPanel Style="{StaticResource panelLateral}">
                 <TextBlock>Nombre del plato</TextBlock>
@@ -180,11 +217,16 @@
                         <CheckBox Style="{StaticResource sulfitosCheckBox}">Sulfitos</CheckBox>
                     </WrapPanel>
                 </GroupBox>
-                <Button>Limpiar Selección</Button>
+                <Button x:Name="limpiarSeleccionButton" Click="limpiarSeleccionButton_Click">Limpiar Selección</Button>
             </StackPanel>
-            <ListBox ItemsSource="{Binding Path=Platos}" SelectedItem="{Binding Path=PlatoSeleccionado}">
-
+            <ListBox ItemsSource="{Binding Path=Platos}" SelectedItem="{Binding Path=PlatoSeleccionado}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel></WrapPanel>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
             </ListBox>
         </DockPanel>
+    </Border>
     </Border>
 </Window>
