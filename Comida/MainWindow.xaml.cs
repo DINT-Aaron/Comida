@@ -31,7 +31,7 @@ namespace Comida
 
         private void limpiarSeleccionButton_Click(object sender, RoutedEventArgs e)
         {
-            vm.PlatoSeleccionado = null;
+            vm.LimpiaSeleccion();
         }
     }
 }

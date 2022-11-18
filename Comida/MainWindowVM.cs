@@ -60,5 +60,9 @@ namespace Comida
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+        public void LimpiaSeleccion()
+        {
+            PlatoSeleccionado = null;
+        }
     }
 }
